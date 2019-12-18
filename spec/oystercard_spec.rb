@@ -1,5 +1,4 @@
-require './lib/oystercard'
-# require './lib/oyster_travel'
+require 'oystercard'
 
 describe Oystercard do 
   describe '#initialization' do 
