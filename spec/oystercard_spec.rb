@@ -69,12 +69,12 @@ let(:station) {double :station}
   let(:start) {double :start}
   let(:finish) {double :finish}
   describe '#store_journey' do 
-    it 'should store entry and exit stations in hash' do 
-      expect(subject.store_journey(start, finish)).to be_a(Hash) 
+    it 'should store the list of journeys in a hash' do 
+      subject.top_up(10)
+      subject.touch_in(start)
+      subject.touch_out(finish)
+      expect(subject.journey).to include ({:start => start, :finish => finish})
     end 
-    # @journey_hash.should include(
-    #   "start" => Oystercard.new.entry_station
-    # )
   end 
 end 
 
