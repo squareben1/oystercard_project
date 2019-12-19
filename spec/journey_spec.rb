@@ -1,4 +1,5 @@
 require 'journey'
+# require_relative 'oystercard'
 
 describe Journey do 
   describe '#initialization' do 
@@ -18,7 +19,7 @@ describe Journey do
   describe '#end_journey' do 
     it 'forgets station on touch_out' do 
       subject.start_journey(station)
-      subject.end_journey(station)
+      subject.reset
       expect(subject.entry_station).to eq nil
     end
   end 
@@ -41,5 +42,23 @@ describe Journey do
       subject.end_journey(finish)
       expect(subject.journey).to include ({:start => start, :finish => finish})
     end 
+  end 
+
+  describe '#fare' do
+    let(:old_street) {"Old Street"}
+    let(:kings_cross) {"Kings Cross"}
+    it 'returns the minimum fare if touch in and touch out' do
+      subject.start_journey(kings_cross)
+      subject.end_journey(old_street)
+      expect(subject.fare).to eq Journey::MIN_FARE
+    end
+    it 'returns the penalty fare of 6 if there was no touch in' do
+      subject.end_journey(old_street)
+      expect(subject.fare).to eq Journey::PENALTY_FARE
+    end
+    it 'returns the penalty fare of 6 if there was no touch out' do
+      subject.start_journey(kings_cross)
+      expect(subject.fare).to eq Journey::PENALTY_FARE
+    end
   end 
 end 

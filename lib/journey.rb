@@ -3,13 +3,15 @@ require_relative 'oystercard'
 
 class Journey
 
-  attr_reader :entry_station, :exit_station, :journey
+  attr_reader :entry_station, :exit_station, :journey, :min_balance, :min_fare, :penalty_fare
+
+  MIN_FARE = 2
+  PENALTY_FARE = 6
 
   def initialize 
     @entry_station = nil 
     @exit_station = nil 
     @journey = [] 
-    # @complete = nil 
   end 
 
   def start_journey(station)
@@ -18,9 +20,20 @@ class Journey
 
   def end_journey(station)
     @exit_station = station 
-    # @complete = true
     store_journey 
-    @entry_station = nil 
+  end 
+
+  def fare 
+    if @entry_station == nil || @exit_station == nil 
+      PENALTY_FARE
+    else 
+      MIN_FARE
+    end 
+  end 
+
+  def reset
+    @entry_station = nil
+    @exit_station = nil 
   end 
 
   def in_journey? 
@@ -29,7 +42,9 @@ class Journey
   end 
 
   def store_journey 
-    @journey << {:start => @entry_station, :finish => @exit_station}
+    @journey << {:start => @entry_station, :finish => @exit_station} 
   end 
+
+  
 
 end 

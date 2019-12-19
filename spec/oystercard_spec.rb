@@ -1,4 +1,5 @@
 require 'oystercard'
+require 'journey'
 
 describe Oystercard do 
   describe '#initialization' do 
@@ -34,32 +35,12 @@ let(:station) {double :station}
       expect(subject).to respond_to(:touch_out).with(1).argument
     end 
     it 'deducts min_fare from @balance' do 
-      min_fare = Oystercard::MIN_FARE
+      min_fare = Journey::MIN_FARE
       subject.top_up(10)
-      expect{subject.touch_out(:exit_station)}.to change{subject.balance}.by(-min_fare)
+      subject.touch_in(station)
+      expect{subject.touch_out(station)}.to change{subject.balance}.by(-min_fare)
     end 
   end 
 
-  describe '#fare' do
-    let(:old_street) {"Old Street"}
-    let(:kings_cross) {"Kings Cross"}
-    it 'returns the minimum fare if touch in and touch out' do
-      subject.top_up(10)
-      subject.touch_in(kings_cross)
-      subject.touch_out(old_street)
-      expect(subject.fare).to eq Oystercard::MIN_FARE
-    end
-    it 'returns the penalty fare of 6 if there was no touch in' do
-      subject.top_up(10)
-      subject.touch_out(old_street)
-      expect(subject.fare).to eq Oystercard::PENALTY_FARE
-    end
-    # it 'returns the penalty fare of 6 if there was no touch out' do
-    #   subject.top_up(10)
-    #   subject.touch_in(kings_cross)
-    #   # p subject.journey.entry_station
-    #   expect(subject.fare).to eq Oystercard::PENALTY_FARE
-    # end
-  end 
 end 
 
