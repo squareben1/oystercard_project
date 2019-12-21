@@ -2,7 +2,7 @@ require 'journey'
 # require_relative 'oystercard'
 
 describe Journey do 
-  describe '#initialization' do 
+  describe '#initialization' do  
     it 'expects an empty array as default' do 
     expect(subject.journey).to eq []
     end 
@@ -44,21 +44,21 @@ describe Journey do
     end 
   end 
 
-  describe '#fare' do
-    let(:old_street) {"Old Street"}
-    let(:kings_cross) {"Kings Cross"}
-    it 'returns the minimum fare if touch in and touch out' do
-      subject.start_journey(kings_cross)
-      subject.end_journey(old_street)
-      expect(subject.fare).to eq Journey::MIN_FARE
-    end
-    it 'returns the penalty fare of 6 if there was no touch in' do
-      subject.end_journey(old_street)
-      expect(subject.fare).to eq Journey::PENALTY_FARE
-    end
-    it 'returns the penalty fare of 6 if there was no touch out' do
-      subject.start_journey(kings_cross)
-      expect(subject.fare).to eq Journey::PENALTY_FARE
-    end
-  end 
+  # describe '#fare' do
+  #   let(:old_street) {"Old Street"}
+  #   let(:kings_cross) {"Kings Cross"}
+  #   it 'returns the minimum fare if touch in and touch out' do
+  #     subject.start_journey(kings_cross) 
+  #     subject.end_journey(old_street)
+  #     expect(subject.fare).to eq Journey::MIN_FARE
+  #   end
+  #   it 'returns the penalty fare of 6 if there was no touch in' do
+  #     subject.end_journey(old_street) 
+  #     expect(subject.fare).to eq Journey::PENALTY_FARE
+  #   end
+  #   it 'returns the penalty fare of 6 if there was no touch out' do
+  #     subject.start_journey(kings_cross) 
+  #     expect(subject.fare).to eq Journey::PENALTY_FARE
+  #   end
+  # end 
 end 

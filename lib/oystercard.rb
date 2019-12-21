@@ -1,19 +1,19 @@
 require_relative 'station'
 require_relative 'journey'
+require_relative 'journeylog'
 
 class Oystercard
 
-attr_reader :balance, :limit, :travelling, :min_fare
+attr_reader :balance, :limit, :travelling, :min_balance
 
 LIMIT = 90
 MIN_BALANCE = 1
 
-  def initialize(limit=LIMIT, min_balance = MIN_BALANCE, journey=Journey.new)
+  def initialize(limit=LIMIT, min_balance = MIN_BALANCE)
     @balance = 0
     @limit = limit
     @min_balance = min_balance
-    @journey = journey
-    @min_fare = min_fare
+    @journey = JourneyLog.new(Journey)  
 
   end 
 
@@ -24,14 +24,14 @@ MIN_BALANCE = 1
 
   def touch_in(station=nil)
     fail "Insufficient Funds" if @balance < @min_balance
-    @journey.start_journey(station)
+    touch_out if @journey.current_journey.entry_station != nil  
+    @journey.start(station) 
   end 
 
   def touch_out(station=nil)
-    @journey.end_journey(station)
-    deduct(@journey.fare) 
-    @journey.reset
-    
+    @journey.finish(station)  
+    deduct(@journey.fare) #journey
+    # @journey.reset #should jsut call on journeylog as this takes care of reset 
   end 
 
   private

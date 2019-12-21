@@ -35,7 +35,7 @@ let(:station) {double :station}
       expect(subject).to respond_to(:touch_out).with(1).argument
     end 
     it 'deducts min_fare from @balance' do 
-      min_fare = Journey::MIN_FARE
+      min_fare = JourneyLog::MIN_FARE #journey # remove??
       subject.top_up(10)
       subject.touch_in(station)
       expect{subject.touch_out(station)}.to change{subject.balance}.by(-min_fare)

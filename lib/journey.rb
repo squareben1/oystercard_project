@@ -1,37 +1,38 @@
 require_relative 'station'
 require_relative 'oystercard'
+require_relative 'journeylog'
 
 class Journey
 
-  attr_reader :entry_station, :exit_station, :journey, :min_balance, :min_fare, :penalty_fare
+  attr_reader :entry_station, :exit_station, :journey, :min_balance#, :min_fare, :penalty_fare
 
-  MIN_FARE = 2
-  PENALTY_FARE = 6
+  # MIN_FARE = 2
+  # PENALTY_FARE = 6
 
-  def initialize 
-    @entry_station = nil 
-    @exit_station = nil 
+  def initialize#(entry_station) 
+    @entry_station #= entry_station
+    @exit_station 
     @journey = [] 
   end 
 
-  def start_journey(station)
+  def start_journey(station) 
     @entry_station = station 
   end 
 
-  def end_journey(station)
+  def end_journey(station) 
     @exit_station = station 
     store_journey 
   end 
 
-  def fare 
-    if @entry_station == nil || @exit_station == nil 
-      PENALTY_FARE
-    else 
-      MIN_FARE
-    end 
-  end 
+  # def fare 
+  #   if @entry_station == nil || @exit_station == nil 
+  #     PENALTY_FARE
+  #   else 
+  #     MIN_FARE
+  #   end 
+  # end 
 
-  def reset
+  def reset 
     @entry_station = nil
     @exit_station = nil 
   end 
